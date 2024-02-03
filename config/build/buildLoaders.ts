@@ -1,61 +1,19 @@
 import { ModuleOptions } from "webpack";
-import MiniCssExtractPlugin from "mini-css-extract-plugin";
 // import ReactRefreshTypeScript  from "react-refresh-typescript";
 import { BuildOptions } from "./types/types";
 import { buildBabelLoader } from "./babel/buildBabelLoader";
+import { buildSvgLoader } from "./loaders/buildSvgLoader";
+import { buildCssLoader } from "./loaders/buildCssLoader";
+import { buildFileLoader } from "./loaders/buildFileLoader";
 
 export function buildLoaders(options: BuildOptions): ModuleOptions['rules'] {
   const isDev = options.mode === 'development';
 
-  const assetLoader = {
-    test: /\.(png|jpg|jpeg|gif)$/i,
-    type: 'asset/resource',
-  };
-
-  const svgrLoader = {
-    test: /\.svg$/i,
-    issuer: /\.[jt]sx?$/,
-    use: [
-      { 
-        loader: '@svgr/webpack',
-          options: { 
-            icon: true,
-            svgoConfig: {
-              plugins: [
-                {
-                  name: 'convertColors',
-                  params: {
-                    currentColor: true
-                  }
-                }
-              ]
-            }
-          }
-      }
-    ],
-  };
+  const svgLoader = buildSvgLoader();
   
-  const cssLoaderWithModules = {
-    loader: "css-loader",
-    options: {
-      modules: {
-        localIdentName: isDev ? '[path][name]__[local]' : '[hash:base64:8]'
-      }
-    },
-  };
+  const scssLoader = buildCssLoader(isDev);
 
-  const scssLoader = {
-    test: /\.s[ac]ss$/i,
-    use: [
-      // Creates `style` nodes from JS strings
-      isDev ? 'style-loader' : MiniCssExtractPlugin.loader,
-      // Translates CSS into CommonJS
-      cssLoaderWithModules,
-      // Compiles Sass to CSS
-      "sass-loader",
-    ],
-  };
-
+  // Если не исп. typescript, то нужен babel
   // const tsLoader = {
   //   test: /\.tsx?$/,
   //   exclude: /node_modules/,
@@ -74,11 +32,13 @@ export function buildLoaders(options: BuildOptions): ModuleOptions['rules'] {
 
   const babelLoader = buildBabelLoader(options);
 
+  const fileLoader = buildFileLoader();
+
   return [
-    assetLoader,
+    fileLoader,
     scssLoader,
     // tsLoader,
     babelLoader,
-    svgrLoader
+    svgLoader
   ];
 }
