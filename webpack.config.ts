@@ -1,6 +1,7 @@
 import path from 'path';
 import { buildWebpack } from './config/build/buildWebpack';
 import { BuildMode, BuildPaths, BuildPlatform } from './config/build/types/types';
+import webpack from 'webpack';
 
 interface EnvVariables {
   mode?: BuildMode;
@@ -9,7 +10,7 @@ interface EnvVariables {
   platform?: BuildPlatform;
 }
 
-export default (env: EnvVariables) => {
+export default (env: EnvVariables): webpack.Configuration => {
   const paths: BuildPaths = {
     output: path.resolve(__dirname, 'build'),
     entry: path.resolve(__dirname, 'src', 'index.tsx'),
@@ -18,7 +19,7 @@ export default (env: EnvVariables) => {
     src: path.resolve(__dirname, 'src')
   };
 
-  const config = buildWebpack({
+  const config: webpack.Configuration = buildWebpack({
     port: env.port ?? 3000,
     mode: env.mode ?? 'development',
     paths,

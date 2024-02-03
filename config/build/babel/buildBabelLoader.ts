@@ -24,6 +24,7 @@ export function buildBabelLoader({ mode }: BuildOptions) {
     use: {
       loader: "babel-loader",
       options: {
+        cacheDirectory: true,
         presets: [
           "@babel/preset-env",
           "@babel/preset-typescript",
