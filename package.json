@@ -11,8 +11,8 @@
     "build:desktop": "webpack --env mode=production --env platform=desktop",
     "typecheck": "tsc",
     "test:unit": "jest --config ./config/jest/jest.config.ts",
-    "storybook": "storybook dev -p 6006 -c ./config/storybook",
-    "storybook:build": "storybook build -c ./config/storybook"
+    "storybook": "storybook dev -p 6006",
+    "storybook:build": "storybook build"
   },
   "keywords": [],
   "author": "",

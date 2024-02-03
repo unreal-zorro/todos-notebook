@@ -1,9 +1,9 @@
 import type { Configuration, RuleSetRule } from 'webpack';
-import { type BuildPaths } from '../build/types/types';
+import { type BuildPaths } from '../config/build/types/types';
 import path from 'path';
-import { buildCssLoader } from '../build/loaders/buildCssLoader';
-import { buildSvgLoader } from '../build/loaders/buildSvgLoader';
-import { buildFileLoader } from '../build/loaders/buildFileLoader';
+import { buildCssLoader } from '../config/build/loaders/buildCssLoader';
+import { buildSvgLoader } from '../config/build/loaders/buildSvgLoader';
+import { buildFileLoader } from '../config/build/loaders/buildFileLoader';
 import webpack from 'webpack';
 
 export default ({ config }: { config: Configuration }): Configuration => {
@@ -12,7 +12,7 @@ export default ({ config }: { config: Configuration }): Configuration => {
     html: '',
     output: '',
     entry: '',
-    src: path.resolve(__dirname, '..', '..', 'src')
+    src: path.resolve(__dirname, '..', 'src')
   };
 
   if (config.resolve) {
@@ -26,7 +26,7 @@ export default ({ config }: { config: Configuration }): Configuration => {
 
   if (config.module) {
     config.module.rules = config?.module?.rules?.map(
-      // ---@ts-expect-error---
+      // @ts-expect-error
       (rule: RuleSetRule | '...') => {
         // eslint-disable-next-line
         if (/svg/.test((rule as RuleSetRule).test as string)) {
