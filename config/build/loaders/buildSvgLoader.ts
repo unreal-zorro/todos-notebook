@@ -11,13 +11,13 @@ export function buildSvgLoader (): webpack.RuleSetRule {
         icon: true,
         svgoConfig: {
           plugins: [
-            {
-              name: 'convertColors',
-              params:
-              {
-                currentColor: true
-              }
-            }
+            // {
+            //   name: 'convertColors',
+            //   params:
+            //   {
+            //     currentColor: true
+            //   }
+            // }
           ]
         }
       }
