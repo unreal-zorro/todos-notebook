@@ -21,3 +21,13 @@
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+
+# code editors
+/.idea
+/.vscode
+
+# reports
+/reports/unit
+
+# storybook
+/storybook-static/
